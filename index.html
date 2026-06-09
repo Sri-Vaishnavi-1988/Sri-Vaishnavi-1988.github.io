@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sri Vaishnavi Devarashetty — Senior Analytics Leader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0f172a;
+      --navy2:  #1e293b;
+      --navy3:  #334155;
+      --teal:   #14b8a6;
+      --teal2:  #0d9488;
+      --white:  #f8fafc;
+      --gray:   #94a3b8;
+      --light:  #e2e8f0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(15,23,42,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(20,184,166,0.15);
+    }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--teal); letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 6rem 2rem 4rem;
+    }
+
+    /* CSS-only gradient orbs */
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.18;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+    .orb1 { width: 500px; height: 500px; background: var(--teal);  top: -10%; left: -10%; animation-delay: 0s; }
+    .orb2 { width: 350px; height: 350px; background: #6366f1;       top: 60%;  right: -5%; animation-delay: -3s; }
+    .orb3 { width: 250px; height: 250px; background: var(--teal2);  top: 30%;  left: 50%;  animation-delay: -5s; }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.08); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 780px; text-align: center; }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(20,184,166,0.15);
+      border: 1px solid rgba(20,184,166,0.4);
+      color: var(--teal);
+      font-size: 0.78rem; font-weight: 600;
+      padding: 0.35rem 1rem; border-radius: 999px;
+      margin-bottom: 1.5rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 0.75rem;
+    }
+    h1 span { color: var(--teal); }
+
+    .typewriter-wrap {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--gray);
+      font-weight: 400;
+      min-height: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    #typewriter::after { content: '|'; animation: blink 0.8s step-end infinite; color: var(--teal); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-sub {
+      color: var(--light);
+      font-size: 1rem;
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      opacity: 0.85;
+    }
+
+    .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 0.8rem 2rem; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--teal); color: var(--navy); }
+    .btn-primary:hover { background: var(--teal2); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
+    .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--navy3); }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-1px); }
+
+    .stat-row {
+      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 3.5rem; padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--teal); line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--gray); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.78rem; font-weight: 600; color: var(--teal);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 0.6rem;
+    }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; }
+    .section-intro { color: var(--gray); font-size: 1rem; max-width: 560px; margin-bottom: 3rem; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--navy2); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .skill-card {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+    .skill-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .skill-name { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+    .skill-desc { font-size: 0.78rem; color: var(--gray); margin-top: 0.25rem; }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 1.1rem; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--teal), transparent);
+    }
+    .timeline-item {
+      display: flex; gap: 2rem;
+      margin-bottom: 2.5rem;
+      padding-left: 0.5rem;
+    }
+    .tl-dot {
+      flex-shrink: 0; width: 1.3rem; height: 1.3rem;
+      background: var(--teal); border-radius: 50%;
+      margin-top: 0.3rem; position: relative; z-index: 1;
+      box-shadow: 0 0 12px rgba(20,184,166,0.5);
+    }
+    .tl-body {
+      background: var(--navy2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 1.5rem;
+      flex: 1; transition: border-color 0.2s;
+    }
+    .tl-body:hover { border-color: rgba(20,184,166,0.3); }
+    .tl-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .tl-company { font-weight: 700; font-size: 1rem; color: var(--teal); }
+    .tl-period { font-size: 0.78rem; color: var(--gray); }
+    .tl-role { font-size: 0.88rem; font-weight: 600; color: var(--light); margin-bottom: 0.75rem; }
+    .tl-body ul { list-style: none; padding: 0; }
+    .tl-body li {
+      font-size: 0.88rem; color: var(--gray); padding: 0.25rem 0;
+      padding-left: 1.2rem; position: relative;
+    }
+    .tl-body li::before { content: '→'; position: absolute; left: 0; color: var(--teal); }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--navy2); }
+    .project-card {
+      background: var(--navy);
+      border: 1px solid rgba(20,184,166,0.25);
+      border-radius: 16px; padding: 2rem;
+      max-width: 700px;
+    }
+    .project-tag {
+      display: inline-block;
+      background: rgba(20,184,166,0.15); color: var(--teal);
+      font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.7rem;
+      border-radius: 999px; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .project-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .project-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.7; }
+    .project-metrics { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .metric { }
+    .metric-val { font-size: 1.4rem; font-weight: 800; color: var(--teal); }
+    .metric-label { font-size: 0.75rem; color: var(--gray); }
+
+    /* ── AI WORKFLOW ── */
+    #ai-workflow {
+      background: linear-gradient(135deg, rgba(20,184,166,0.06) 0%, var(--navy) 60%);
+    }
+    .ai-quote {
+      background: var(--navy2);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem 2rem;
+      font-style: italic;
+      color: var(--light);
+      font-size: 1.05rem;
+      margin-bottom: 3rem;
+      max-width: 700px;
+    }
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .workflow-card {
+      background: var(--navy2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 1.4rem;
+      transition: border-color 0.2s;
+    }
+    .workflow-card:hover { border-color: var(--teal); }
+    .workflow-step { font-size: 0.72rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .workflow-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .workflow-card p { font-size: 0.82rem; color: var(--gray); }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+    .contact-card {
+      background: var(--navy2);
+      border: 1px solid rgba(20,184,166,0.2);
+      border-radius: 20px; padding: 3rem 2rem;
+      max-width: 560px; margin: 0 auto;
+    }
+    .contact-card h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .contact-card p { color: var(--gray); margin-bottom: 2rem; }
+    .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem; border-radius: 8px;
+      text-decoration: none; font-size: 0.9rem; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .contact-email { background: var(--teal); color: var(--navy); }
+    .contact-email:hover { background: var(--teal2); }
+    .contact-li { background: transparent; color: var(--white); border: 1px solid var(--navy3); }
+    .contact-li:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem;
+      color: var(--navy3); font-size: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.8rem; }
+      .stat-row { gap: 2rem; }
+      .timeline::before { left: 0.65rem; }
+      .tl-dot { width: 1rem; height: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SV Devarashetty</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#ai-workflow">AI Workflow</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Open to Opportunities · Hyderabad, India</div>
+    <h1>Sri <span>Vaishnavi</span><br>Devarashetty</h1>
+    <div class="typewriter-wrap"><span id="typewriter"></span></div>
+    <p class="hero-sub">12+ years translating complex business questions into measurable analytics outcomes — now with AI as a co-analyst.</p>
+    <div class="btn-row">
+      <a href="mailto:srivaishnavi.devarashetty@gmail.com" class="btn btn-primary">✉ Get in Touch</a>
+      <a href="https://www.linkedin.com/in/srivaishnavi-devarashetty/" target="_blank" class="btn btn-outline">LinkedIn Profile →</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Analytics Products</div></div>
+      <div class="stat"><div class="stat-num">30%</div><div class="stat-label">Data Processing Cut</div></div>
+      <div class="stat"><div class="stat-num">20%</div><div class="stat-label">Compliance Improvement</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label reveal">Core Stack</p>
+    <h2 class="reveal">Skills &amp; Tools</h2>
+    <p class="section-intro reveal">End-to-end analytics capability — from raw SQL to executive dashboards, with AI woven through every layer.</p>
+    <div class="skills-grid">
+      <div class="skill-card reveal"><div class="skill-icon">📊</div><div class="skill-name">Tableau</div><div class="skill-desc">Advanced · Tableau Server · LOD · Table Calcs</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">❄️</div><div class="skill-name">Snowflake</div><div class="skill-desc">Data warehousing · Cortex AI · Query optimization</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">🗄️</div><div class="skill-name">SQL</div><div class="skill-desc">Snowflake · MS SQL · MySQL · PostgreSQL</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><div class="skill-desc">pandas · numpy · data pipelines · automation</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">☁️</div><div class="skill-name">Google Cloud</div><div class="skill-desc">GCP · Google Analytics · BigQuery</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">🤖</div><div class="skill-name">AI-Augmented Analytics</div><div class="skill-desc">ChatGPT · GitHub Copilot · Claude · Snowflake Cortex</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">🔄</div><div class="skill-name">ETL &amp; Data Modeling</div><div class="skill-desc">Pipeline design · data warehousing · automation</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">🛡️</div><div class="skill-name">Data Governance</div><div class="skill-desc">Quality · lineage · compliance · MDM</div></div>
+      <div class="skill-card reveal"><div class="skill-icon">👥</div><div class="skill-name">Leadership</div><div class="skill-desc">Team mentorship · stakeholder management · Agile</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <p class="section-label reveal">Career</p>
+    <h2 class="reveal">Experience</h2>
+    <p class="section-intro reveal">Progressive analytics leadership across global enterprises — from engineering foundations to managing AI-augmented analytics teams.</p>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-meta">
+            <span class="tl-company">Wipro Limited · Client: Apple Inc.</span>
+            <span class="tl-period">Feb 2023 – Present</span>
+          </div>
+          <div class="tl-role">Assistant Manager – Analytics</div>
+          <ul>
+            <li>Lead Tableau-based L&amp;D analytics for Apple's global learning platforms</li>
+            <li>Dashboards improved user satisfaction 20%, reduced content delivery costs 10%</li>
+            <li>Integrated Tableau with multiple data sources — cut processing time 30%</li>
+            <li>Applied AI tools (ChatGPT, GitHub Copilot, Claude) to accelerate SQL and reporting</li>
+            <li>Strengthened data governance, reducing compliance issues 20%</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-meta">
+            <span class="tl-company">NVIDIA Corporation</span>
+            <span class="tl-period">May 2017 – Feb 2023</span>
+          </div>
+          <div class="tl-role">Visual Artist / Asst. Manager – Analytics</div>
+          <ul>
+            <li>Analytics for a 35-member team across business operations and data governance</li>
+            <li>Mentored 3 analysts — 2 promoted within 18 months — building 5+ analytics products</li>
+            <li>Designed ETL flows that improved data efficiency 10%, reduced retrieval time 20%</li>
+            <li>Delivered SQL and Tableau training programs to standardize analytics quality</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-meta">
+            <span class="tl-company">Spectrum Consultants</span>
+            <span class="tl-period">Oct 2016 – May 2017</span>
+          </div>
+          <div class="tl-role">Data Analyst</div>
+          <ul>
+            <li>Excel/VBA automation improved analysis speed and accuracy 35%</li>
+            <li>Delivered 15+ Tableau dashboards across business teams</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="tl-meta">
+            <span class="tl-company">GSS Infotech Limited</span>
+            <span class="tl-period">Jun 2010 – Nov 2012</span>
+          </div>
+          <div class="tl-role">Software Engineer</div>
+          <ul>
+            <li>Built and maintained SQL-based data pipelines for business decision-making</li>
+            <li>Agile delivery, sprint ceremonies, and cross-functional collaboration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label reveal">Featured Work</p>
+    <h2 class="reveal">Projects</h2>
+    <p class="section-intro reveal">Open-source analytics tools built to solve real QA and governance problems.</p>
+    <div class="project-card reveal">
+      <span class="project-tag">Agent Skill · Open Source</span>
+      <h3>Dashboard QA Checklist</h3>
+      <p>An AI-assisted quality checklist that reviews Tableau dashboards for broken calculations, missing joins, inconsistent KPI definitions, and governance gaps — before dashboards reach stakeholders. Built from real production QA experience at Apple and NVIDIA.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-val">20%</div><div class="metric-label">Compliance issues reduced</div></div>
+        <div class="metric"><div class="metric-val">10-point</div><div class="metric-label">QA framework</div></div>
+        <div class="metric"><div class="metric-val">AI-assisted</div><div class="metric-label">Automated checking</div></div>
+      </div>
+      <div class="btn-row" style="justify-content:flex-start;">
+        <a href="https://github.com/Sri-Vaishnavi-1988" target="_blank" class="btn btn-outline" style="font-size:0.85rem;padding:0.6rem 1.4rem;">View on GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI WORKFLOW -->
+<section id="ai-workflow">
+  <div class="container">
+    <p class="section-label reveal">How I Work</p>
+    <h2 class="reveal">AI-Augmented Analytics</h2>
+    <blockquote class="ai-quote reveal">
+      "I use AI as a co-analyst, not a shortcut. Every AI output — every number, query, and stakeholder message — gets a human review step before it reaches production."
+    </blockquote>
+    <div class="workflow-grid">
+      <div class="workflow-card reveal">
+        <div class="workflow-step">SQL Acceleration</div>
+        <h4>GitHub Copilot</h4>
+        <p>Scaffolds complex Snowflake queries — window functions, CTEs, performance-tuned aggregations — which I validate before running.</p>
+      </div>
+      <div class="workflow-card reveal">
+        <div class="workflow-step">Dashboard Design</div>
+        <h4>Claude · ChatGPT</h4>
+        <p>Suggests Tableau LOD expressions and calculated field logic when working through tricky aggregations or governance edge cases.</p>
+      </div>
+      <div class="workflow-card reveal">
+        <div class="workflow-step">Stakeholder Narratives</div>
+        <h4>AI-Drafted Summaries</h4>
+        <p>Translates analyst-language KPI changes into executive-ready briefs — I edit and approve every word before delivery.</p>
+      </div>
+      <div class="workflow-card reveal">
+        <div class="workflow-step">Natural Language Queries</div>
+        <h4>Snowflake Cortex</h4>
+        <p>Enables business stakeholders to query data directly, reducing ad-hoc SQL requests to the analytics team.</p>
+      </div>
+      <div class="workflow-card reveal">
+        <div class="workflow-step">Quality Assurance</div>
+        <h4>AI-Assisted QA</h4>
+        <p>Automated checklist reviews dashboards for broken joins, missing calculations, and inconsistent KPI definitions pre-publication.</p>
+      </div>
+      <div class="workflow-card reveal">
+        <div class="workflow-step">Documentation</div>
+        <h4>AI-Generated Drafts</h4>
+        <p>First-draft data dictionary entries and governance documentation — reviewed and corrected before going into the catalog.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-card reveal">
+      <h3>Let's Work Together</h3>
+      <p>Open to Analytics Manager, Senior Analytics Lead, and AI-Augmented Data Analyst roles. Based in Hyderabad — open to remote and hybrid across India.</p>
+      <div class="contact-links">
+        <a href="mailto:srivaishnavi.devarashetty@gmail.com" class="contact-link contact-email">✉ Email Me</a>
+        <a href="https://www.linkedin.com/in/srivaishnavi-devarashetty/" target="_blank" class="contact-link contact-li">in LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Sri Vaishnavi Devarashetty · Senior Analytics Leader · Hyderabad, India
+</footer>
+
+<script>
+  // Typewriter
+  const phrases = [
+    'Senior Analytics Leader',
+    'Tableau · Snowflake · SQL',
+    'AI-Augmented Data Analyst',
+    '12+ Years of Data Storytelling',
+  ];
+  let pi = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typewriter');
+  function type() {
+    const phrase = phrases[pi];
+    el.textContent = deleting ? phrase.slice(0, ci--) : phrase.slice(0, ci++);
+    let delay = deleting ? 40 : 80;
+    if (!deleting && ci > phrase.length) { delay = 1800; deleting = true; }
+    else if (deleting && ci < 0) { deleting = false; pi = (pi + 1) % phrases.length; ci = 0; delay = 400; }
+    setTimeout(type, delay);
+  }
+  type();
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
