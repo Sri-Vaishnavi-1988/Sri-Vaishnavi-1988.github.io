@@ -206,6 +206,12 @@
     }
     .project-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
     .project-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.7; }
+    .project-screenshot {
+      width: 100%; border-radius: 10px; margin-bottom: 1.5rem;
+      border: 1px solid rgba(20,184,166,0.2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      display: block;
+    }
     .project-metrics { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
     .metric { }
     .metric-val { font-size: 1.4rem; font-weight: 800; color: var(--teal); }
@@ -425,6 +431,9 @@
     <div class="project-card reveal" style="margin-bottom:1.5rem;">
       <span class="project-tag">Live Site · Skills Showcase</span>
       <h3>Analytics Skills Showcase</h3>
+      <a href="https://sri-vaishnavi-1988.github.io/analytics-skills-showcase/" target="_blank">
+        <img src="showcase-screenshot.png" alt="Analytics Skills Showcase preview" class="project-screenshot" />
+      </a>
       <p>A full interactive showcase of SQL (Snowflake window functions, CTEs, optimisation), Python data pipelines, Tableau LOD expressions, data governance checklists, and AI-augmented analytics workflow — all built from real work at Apple and NVIDIA.</p>
       <div class="project-metrics">
         <div class="metric"><div class="metric-val">5</div><div class="metric-label">Skill areas</div></div>
