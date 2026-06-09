@@ -64,6 +64,7 @@
 |---|---|
 | [`Sri_Vaishnavi_Resume.pdf`](Sri_Vaishnavi_Resume.pdf) | Download resume |
 | [`7_Day_Interview_Handbook.pdf`](7_Day_Interview_Handbook.pdf) | 7-day interview prep handbook — SQL, Tableau, Python, AI, STAR stories, salary negotiation |
+| [`Interview_Prep_Workbook.xlsx`](Interview_Prep_Workbook.xlsx) | Excel workbook — SQL, Python/pandas, Tableau, Data Governance, AI Tools with MCQ + theoretical questions |
 
 ---
 
