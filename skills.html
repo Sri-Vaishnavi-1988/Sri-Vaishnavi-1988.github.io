@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics Skills Showcase — Sri Vaishnavi Devarashetty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0f172a; --navy2: #1e293b; --teal: #14b8a6;
+      --white: #f8fafc; --gray: #94a3b8; --light: #e2e8f0;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; }
+
+    header {
+      padding: 2.5rem 2rem 2rem;
+      border-bottom: 1px solid rgba(20,184,166,0.15);
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: space-between; align-items: flex-end;
+    }
+    .header-left h1 { font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 800; letter-spacing: -0.5px; }
+    .header-left h1 span { color: var(--teal); }
+    .header-left p { color: var(--gray); font-size: 0.9rem; margin-top: 0.4rem; }
+    .header-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .hlink {
+      padding: 0.5rem 1.1rem; border-radius: 8px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .hlink-primary { background: var(--teal); color: var(--navy); }
+    .hlink-primary:hover { background: #0d9488; }
+    .hlink-outline { border: 1px solid rgba(255,255,255,0.15); color: var(--gray); }
+    .hlink-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    main { max-width: 960px; margin: 0 auto; padding: 3rem 2rem; }
+
+    .section-title {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--teal); margin-bottom: 1.25rem;
+    }
+
+    /* FEATURED CARD */
+    .featured-card {
+      background: linear-gradient(135deg, rgba(20,184,166,0.12), rgba(99,102,241,0.08));
+      border: 1px solid rgba(20,184,166,0.35);
+      border-radius: 16px; padding: 2rem;
+      display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .featured-icon { font-size: 3.5rem; flex-shrink: 0; }
+    .featured-body h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; }
+    .featured-body p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.2rem; line-height: 1.6; }
+    .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .tag {
+      background: rgba(20,184,166,0.12); color: var(--teal);
+      font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.7rem;
+      border-radius: 999px; text-transform: uppercase; letter-spacing: 0.07em;
+    }
+    .btn-launch {
+      display: inline-block; background: var(--teal); color: var(--navy);
+      padding: 0.7rem 1.8rem; border-radius: 8px; font-size: 0.92rem;
+      font-weight: 700; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-launch:hover { background: #0d9488; transform: translateY(-1px); }
+
+    /* SKILL CARDS GRID */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+    .card {
+      background: var(--navy2); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .card:hover { border-color: var(--teal); transform: translateY(-2px); }
+    .card-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.82rem; color: var(--gray); line-height: 1.55; }
+    .card-files { margin-top: 0.85rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .file-link {
+      font-size: 0.78rem; color: var(--teal); text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .file-link::before { content: '→'; }
+    .file-link:hover { text-decoration: underline; }
+
+    /* STATS */
+    .stats-row { display: flex; gap: 2.5rem; flex-wrap: wrap; padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.07); border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 3rem; }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--teal); }
+    .stat-label { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.2rem; }
+
+    footer { text-align: center; padding: 2rem; color: rgba(148,163,184,0.5); font-size: 0.78rem; border-top: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Analytics <span>Skills</span> Showcase</h1>
+    <p>Sri Vaishnavi Devarashetty · Senior Analytics Leader · 12+ Years · Hyderabad, India</p>
+  </div>
+  <div class="header-links">
+    <a href="index.html" class="hlink hlink-outline">← Portfolio</a>
+    <a href="https://www.linkedin.com/in/srivaishnavi-devarashetty/" target="_blank" class="hlink hlink-primary">LinkedIn</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- FEATURED: QUIZ -->
+  <p class="section-title">Featured · Try it live</p>
+  <div class="featured-card">
+    <div class="featured-icon">🎯</div>
+    <div class="featured-body">
+      <h2>Data Analyst Interview Quiz</h2>
+      <p>30 questions across 5 categories. Study Mode shows explanations after each answer. Test Mode scores you at the end. Built from real interview patterns in SQL, Python, Tableau, Data Cleansing, and Governance.</p>
+      <div class="tag-row">
+        <span class="tag">SQL</span>
+        <span class="tag">Python</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">Data Cleansing</span>
+        <span class="tag">Governance</span>
+      </div>
+      <a href="quiz-app/index.html" class="btn-launch">Launch Quiz →</a>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Years Experience</div></div>
+    <div class="stat-item"><div class="stat-num">30</div><div class="stat-label">Quiz Questions</div></div>
+    <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">SQL Files</div></div>
+    <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Python Scripts</div></div>
+    <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Skill Areas</div></div>
+  </div>
+
+  <!-- SKILL SECTIONS -->
+  <p class="section-title">Skills by Category</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-icon">🗄️</div>
+      <h3>SQL & Snowflake</h3>
+      <p>Window functions, CTEs, query optimization, L&D analytics patterns used at Apple and NVIDIA.</p>
+      <div class="card-files">
+        <a href="sql/01_window_functions.sql" class="file-link">Window Functions (L&D context)</a>
+        <a href="sql/02_snowflake_optimization.sql" class="file-link">Snowflake Optimization</a>
+        <a href="sql/03_ld_analytics_dashboard_queries.sql" class="file-link">Dashboard Queries</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🐍</div>
+      <h3>Python & pandas</h3>
+      <p>Data cleaning pipelines with quality flagging, KPI automation, and executive summary generation.</p>
+      <div class="card-files">
+        <a href="python/data_cleaning_pipeline.py" class="file-link">Data Cleaning Pipeline</a>
+        <a href="python/kpi_narrator.py" class="file-link">KPI Narrator (auto-briefings)</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>Tableau</h3>
+      <p>LOD expressions (FIXED / INCLUDE / EXCLUDE), context filters, table calculations — real patterns from Apple L&D dashboards.</p>
+      <div class="card-files">
+        <a href="tableau/lod_expressions_guide.md" class="file-link">LOD Expressions Guide</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <h3>Data Governance</h3>
+      <p>5-section pre-publish checklist: source validation, KPI accuracy, dashboard QA, business logic, and compliance. Reduced compliance issues 20% at Apple.</p>
+      <div class="card-files">
+        <a href="data-governance/data_quality_checklist.md" class="file-link">Data Quality Checklist</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h3>AI-Augmented Analytics</h3>
+      <p>Daily workflow integrating ChatGPT, GitHub Copilot, Claude, and Snowflake Cortex — with governance rules for production-safe use.</p>
+      <div class="card-files">
+        <a href="ai-workflow/ai_augmented_analytics.md" class="file-link">AI Workflow & Governance</a>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>© 2026 Sri Vaishnavi Devarashetty · <a href="https://www.linkedin.com/in/srivaishnavi-devarashetty/" style="color:var(--teal);text-decoration:none;">linkedin.com/in/srivaishnavi-devarashetty</a></footer>
+
+</body>
+</html>
