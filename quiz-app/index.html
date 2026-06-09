@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Analyst Interview Quiz</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f1f5f9; --white: #ffffff; --navy: #0f172a;
+      --blue: #0ea5e9; --blue2: #0284c7; --teal: #14b8a6;
+      --green: #22c55e; --red: #ef4444; --gray: #64748b;
+      --light: #e2e8f0; --text: #1e293b;
+    }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* HEADER */
+    header { background: var(--navy); color: #fff; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.1rem; font-weight: 700; }
+    header span { font-size: 0.8rem; color: #94a3b8; }
+
+    /* MAIN LAYOUT */
+    .app { max-width: 760px; margin: 0 auto; padding: 2rem 1rem; }
+
+    /* SETUP SCREEN */
+    #setup { }
+    .setup-card { background: var(--white); border-radius: 16px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .setup-card h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .setup-card p { color: var(--gray); margin-bottom: 2rem; }
+    .mode-row, .cat-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray); margin-bottom: 0.6rem; }
+    .chip {
+      padding: 0.5rem 1.1rem; border-radius: 999px; border: 2px solid var(--light);
+      background: transparent; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      transition: all 0.15s; color: var(--text);
+    }
+    .chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .chip:hover:not(.active) { border-color: var(--blue); color: var(--blue); }
+    .btn-start {
+      background: var(--blue); color: #fff; border: none;
+      padding: 0.9rem 2.5rem; border-radius: 10px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background 0.15s; display: block; margin-top: 1rem;
+    }
+    .btn-start:hover { background: var(--blue2); }
+
+    /* QUIZ SCREEN */
+    #quiz { display: none; }
+    .progress-bar-wrap { background: var(--light); border-radius: 999px; height: 6px; margin-bottom: 1.5rem; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 999px; transition: width 0.4s ease; }
+    .quiz-meta { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--gray); margin-bottom: 0.5rem; }
+    .category-badge {
+      display: inline-block; padding: 0.2rem 0.8rem; border-radius: 999px;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 1rem;
+    }
+    .cat-SQL       { background: #dbeafe; color: #1d4ed8; }
+    .cat-Python    { background: #dcfce7; color: #166534; }
+    .cat-Tableau   { background: #ede9fe; color: #6d28d9; }
+    .cat-Cleansing { background: #fef3c7; color: #92400e; }
+    .cat-Governance{ background: #fce7f3; color: #9d174d; }
+
+    .question-card { background: var(--white); border-radius: 16px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .question-text { font-size: 1.1rem; font-weight: 600; line-height: 1.5; margin-bottom: 1.5rem; }
+    .options { display: flex; flex-direction: column; gap: 0.75rem; }
+    .option {
+      display: flex; align-items: flex-start; gap: 0.85rem;
+      padding: 0.85rem 1.1rem; border-radius: 10px;
+      border: 2px solid var(--light); cursor: pointer;
+      transition: all 0.15s; font-size: 0.92rem; background: var(--bg);
+    }
+    .option:hover:not(.disabled) { border-color: var(--blue); background: #f0f9ff; }
+    .option.correct  { border-color: var(--green); background: #f0fdf4; }
+    .option.wrong    { border-color: var(--red);   background: #fef2f2; }
+    .option.revealed { border-color: var(--green); background: #f0fdf4; }
+    .option.disabled { cursor: default; }
+    .opt-letter {
+      width: 1.6rem; height: 1.6rem; border-radius: 50%;
+      background: var(--light); color: var(--gray);
+      font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.15s;
+    }
+    .option.correct  .opt-letter { background: var(--green); color: #fff; }
+    .option.wrong    .opt-letter { background: var(--red);   color: #fff; }
+    .option.revealed .opt-letter { background: var(--green); color: #fff; }
+
+    .explanation {
+      margin-top: 1.25rem; padding: 1rem 1.2rem;
+      background: #f0f9ff; border-left: 3px solid var(--blue);
+      border-radius: 0 8px 8px 0; font-size: 0.88rem; color: var(--text);
+      line-height: 1.6; display: none;
+    }
+    .explanation.show { display: block; }
+    .explanation strong { color: var(--blue2); }
+
+    .nav-row { display: flex; gap: 1rem; justify-content: flex-end; }
+    .btn-nav {
+      padding: 0.75rem 1.8rem; border-radius: 8px; font-size: 0.92rem; font-weight: 700;
+      cursor: pointer; border: none; transition: all 0.15s;
+    }
+    .btn-next { background: var(--navy); color: #fff; }
+    .btn-next:hover { background: #1e293b; }
+    .btn-next:disabled { opacity: 0.4; cursor: default; }
+
+    .score-live { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+    .score-live span { color: var(--blue); }
+
+    /* RESULTS SCREEN */
+    #results { display: none; }
+    .results-card { background: var(--white); border-radius: 16px; padding: 2.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center; }
+    .result-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .result-pct { font-size: 3.5rem; font-weight: 800; }
+    .result-pct.pass { color: var(--green); }
+    .result-pct.fail { color: var(--red); }
+    .result-label { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .result-sub { color: var(--gray); font-size: 0.9rem; margin-bottom: 2rem; }
+    .cat-breakdown { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; text-align: left; }
+    .cat-stat { background: var(--bg); border-radius: 10px; padding: 0.85rem 1rem; }
+    .cat-stat-name { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray); margin-bottom: 0.25rem; }
+    .cat-stat-score { font-size: 1.2rem; font-weight: 800; color: var(--navy); }
+    .btn-row-results { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-retake { background: var(--blue); color: #fff; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+    .btn-retake:hover { background: var(--blue2); }
+    .btn-setup { background: transparent; color: var(--navy); border: 2px solid var(--light); padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+    .btn-setup:hover { border-color: var(--navy); }
+
+    @media (max-width: 500px) {
+      .question-card { padding: 1.25rem; }
+      .question-text { font-size: 1rem; }
+      .option { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>📊 Data Analyst Interview Quiz</h1>
+  <span>SQL · Python · Tableau · Data Cleansing · Governance</span>
+</header>
+
+<div class="app">
+
+  <!-- SETUP SCREEN -->
+  <div id="setup">
+    <div class="setup-card">
+      <h2>Practice Interview Questions</h2>
+      <p>30 questions across 5 categories. Choose your mode and category, then start.</p>
+
+      <div class="label">Mode</div>
+      <div class="mode-row">
+        <button class="chip active" data-mode="study" onclick="selectMode(this)">📖 Study Mode <small style="font-weight:400">(see explanations)</small></button>
+        <button class="chip"        data-mode="test"  onclick="selectMode(this)">🎯 Test Mode  <small style="font-weight:400">(score at end)</small></button>
+      </div>
+
+      <div class="label">Category</div>
+      <div class="cat-row">
+        <button class="chip active" data-cat="All"        onclick="selectCat(this)">All (30)</button>
+        <button class="chip"        data-cat="SQL"        onclick="selectCat(this)">SQL (8)</button>
+        <button class="chip"        data-cat="Python"     onclick="selectCat(this)">Python (6)</button>
+        <button class="chip"        data-cat="Tableau"    onclick="selectCat(this)">Tableau (5)</button>
+        <button class="chip"        data-cat="Cleansing"  onclick="selectCat(this)">Data Cleansing (6)</button>
+        <button class="chip"        data-cat="Governance" onclick="selectCat(this)">Data Governance (5)</button>
+      </div>
+
+      <button class="btn-start" onclick="startQuiz()">Start Quiz →</button>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz">
+    <div class="quiz-meta">
+      <span id="q-counter">Question 1 of 30</span>
+      <span class="score-live">Score: <span id="score-live">0</span></span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
+    <div class="question-card">
+      <div class="category-badge" id="cat-badge">SQL</div>
+      <div class="question-text" id="q-text">Loading...</div>
+      <div class="options" id="options"></div>
+      <div class="explanation" id="explanation"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-nav btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="results">
+    <div class="results-card">
+      <div class="result-icon" id="result-icon">🏆</div>
+      <div class="result-pct" id="result-pct">0%</div>
+      <div class="result-label" id="result-label">Loading...</div>
+      <div class="result-sub" id="result-sub"></div>
+      <div class="cat-breakdown" id="cat-breakdown"></div>
+      <div class="btn-row-results">
+        <button class="btn-retake" onclick="retakeQuiz()">Retake Quiz</button>
+        <button class="btn-setup"  onclick="backToSetup()">Change Settings</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const ALL_QUESTIONS = [
+  // ─── SQL ───
+  { cat:'SQL', q:'Which JOIN returns all rows from the LEFT table even if there is no match in the RIGHT table?',
+    opts:['INNER JOIN','RIGHT JOIN','LEFT JOIN','CROSS JOIN'], correct:2,
+    exp:'LEFT JOIN returns all rows from the left table and matching rows from the right. Non-matching right-side rows appear as NULL. Use it when you need all records from one table regardless of whether a match exists.' },
+  { cat:'SQL', q:'What is the correct execution order of SQL clauses?',
+    opts:['WHERE → FROM → SELECT → GROUP BY','FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY','SELECT → FROM → WHERE → GROUP BY','GROUP BY → WHERE → FROM → SELECT'], correct:1,
+    exp:'SQL processes: FROM (which tables), WHERE (filter rows), GROUP BY (aggregate), HAVING (filter groups), SELECT (choose columns), ORDER BY (sort). Understanding this order helps debug why aggregate functions fail in WHERE clauses.' },
+  { cat:'SQL', q:'For values [100, 100, 90], what does DENSE_RANK() return?',
+    opts:['1, 1, 3','1, 1, 2','1, 2, 3','0, 0, 1'], correct:1,
+    exp:'DENSE_RANK gives no gaps after ties. Both 100s get rank 1, then 90 gets rank 2. RANK() would give 1, 1, 3 — skipping rank 2. ROW_NUMBER() would give 1, 2, 3 regardless of ties.' },
+  { cat:'SQL', q:'Which is generally faster for checking if a related row exists?',
+    opts:['IN with subquery','EXISTS','They are identical in all databases','JOIN'], correct:1,
+    exp:'EXISTS short-circuits — it stops scanning as soon as it finds the first matching row. IN evaluates the full subquery result first. For large tables, EXISTS can be dramatically faster.' },
+  { cat:'SQL', q:'What does a CTE (Common Table Expression) do?',
+    opts:['Creates a named temporary result set reusable within the same query','Creates a permanent table in the database','Caches query results permanently across sessions','Replaces stored procedures entirely'], correct:0,
+    exp:'A CTE (WITH clause) creates a named temporary result set valid only for the query it\'s defined in. It improves readability, avoids repetition, and can be referenced multiple times in the same query — unlike subqueries.' },
+  { cat:'SQL', q:'What is the difference between WHERE and HAVING?',
+    opts:['WHERE filters after aggregation; HAVING filters before','WHERE and HAVING are interchangeable','WHERE filters before aggregation; HAVING filters after GROUP BY','HAVING is only used with ORDER BY'], correct:2,
+    exp:'WHERE filters individual rows before GROUP BY runs. HAVING filters the grouped results after aggregation. You cannot use aggregate functions like SUM() or COUNT() in a WHERE clause — they must go in HAVING.' },
+  { cat:'SQL', q:'Which window function returns the value from the previous row?',
+    opts:['LEAD()','PREV()','LAG()','OFFSET()'], correct:2,
+    exp:'LAG() accesses the value from a previous row in the result set without collapsing rows like GROUP BY does. LEAD() accesses the next row. Both are window functions perfect for period-over-period comparisons.' },
+  { cat:'SQL', q:'What makes a WHERE condition "non-sargable" (unable to use an index)?',
+    opts:['Using = operator','Filtering on a primary key','Applying a function to an indexed column','Using AND with multiple conditions'], correct:2,
+    exp:'WHERE YEAR(sale_date) = 2025 is non-sargable because the function wraps the column — the database can\'t use the index on sale_date. Use: WHERE sale_date >= \'2025-01-01\' AND sale_date < \'2026-01-01\' instead. Same result, index-friendly.' },
+
+  // ─── Python ───
+  { cat:'Python', q:'What does df.groupby("region")["revenue"].transform("mean") return?',
+    opts:['One row per region with the mean revenue','A Series aligned to the original DataFrame with each row replaced by its group\'s mean','Modifies the original DataFrame in place','Same result as df.groupby("region")["revenue"].mean()'], correct:1,
+    exp:'transform() returns a result with the same index as the original DataFrame — every row gets its group\'s statistic. This differs from agg/mean which collapses to one row per group. Use transform when you want to add a group stat as a new column.' },
+  { cat:'Python', q:'What is the difference between loc and iloc in pandas?',
+    opts:['loc uses labels/index names; iloc uses integer positions','loc is faster than iloc','iloc uses labels; loc uses integer positions','They are identical in all cases'], correct:0,
+    exp:'df.loc["row_label", "column_name"] uses axis labels. df.iloc[0, 1] uses integer-based positions (0-indexed). Confusing them causes subtle bugs when the DataFrame index is not the default 0, 1, 2 sequence.' },
+  { cat:'Python', q:'Which method correctly removes duplicate rows from a DataFrame?',
+    opts:['df.remove_duplicates()','df.drop_duplicates()','df.unique()','df.deduplicate()'], correct:1,
+    exp:'df.drop_duplicates() removes duplicate rows. Specify subset=["col1","col2"] to check only specific columns for duplication, and keep="first" or keep="last" to control which duplicate to retain.' },
+  { cat:'Python', q:'How do you handle a 10GB CSV that won\'t fit in memory?',
+    opts:['Increase your computer\'s RAM','Use pd.read_csv with chunksize to process in batches','Convert to JSON first','pandas cannot handle files over 2GB'], correct:1,
+    exp:'pd.read_csv("file.csv", chunksize=100000) returns an iterator of DataFrames you process batch by batch. Alternatively use Dask (parallel pandas), Polars (Rust-based, much faster), or PySpark for distributed processing.' },
+  { cat:'Python', q:'What is the IQR method for outlier detection?',
+    opts:['Remove any value more than 2 standard deviations from the mean','Flag values below Q1 - 1.5×IQR or above Q3 + 1.5×IQR','Remove the top and bottom 5% of values','Use the median absolute deviation only'], correct:1,
+    exp:'IQR = Q3 - Q1. Values outside [Q1 - 1.5×IQR, Q3 + 1.5×IQR] are outliers. This method is robust to skewed data unlike the standard deviation method, which is pulled by the very outliers you\'re trying to detect.' },
+  { cat:'Python', q:'What does the apply() method do in pandas?',
+    opts:['Applies a function element-wise to a DataFrame only','Applies a function along an axis (rows or columns) of a DataFrame or Series','Same as map() in all contexts','Only works on numeric columns'], correct:1,
+    exp:'apply() works on a Series (element-wise) or DataFrame (row/column-wise via axis=0 or axis=1). map() is element-wise on a Series. The deprecated applymap() (now map()) was element-wise on DataFrames.' },
+
+  // ─── Tableau ───
+  { cat:'Tableau', q:'Which LOD expression type ignores all view-level dimensions?',
+    opts:['INCLUDE','FIXED','EXCLUDE','TOTAL'], correct:1,
+    exp:'FIXED computes at the dimension(s) you specify, completely ignoring what\'s in the view — even context filters don\'t affect it (only data source filters do). INCLUDE adds dimensions to the view level. EXCLUDE removes specific dimensions.' },
+  { cat:'Tableau', q:'What is the difference between a regular filter and a context filter?',
+    opts:['They are functionally identical','Regular filters apply before context filters','Context filters execute first and create a temporary table that all other filters operate on','Context filters only apply to measures, not dimensions'], correct:2,
+    exp:'Context filters run first and define the data pool for the rest of the view. Other filters then apply to that reduced set. Use context filters when Top N filters aren\'t working correctly alongside dimension filters.' },
+  { cat:'Tableau', q:'When do table calculations compute?',
+    opts:['At the data source level before any retrieval','During the extract refresh','After data is retrieved, at the visualization level in Tableau','Before aggregation in the database'], correct:2,
+    exp:'Table calculations (RUNNING_SUM, WINDOW_AVG, RANK, PERCENT_OF_TOTAL) run entirely inside Tableau on the aggregated data already in the view. They cannot be used as filters the same way dimension/measure filters can.' },
+  { cat:'Tableau', q:'What is a FIXED LOD expression used for?',
+    opts:['Including extra dimensions in calculations','Filtering data at a specific level','Computing an aggregate at a specified dimension level regardless of the view','Creating calculated fields with conditional logic'], correct:2,
+    exp:'{ FIXED [Region] : SUM([Revenue]) } gives region-level revenue regardless of what\'s in the view. Classic use: customer\'s first order date regardless of product filters. FIXED is ignored by dimension filters but respected by data source and context filters.' },
+  { cat:'Tableau', q:'What are Parameters in Tableau used for?',
+    opts:['Filtering data at the database level','Creating dynamic user-controlled inputs that can drive calculations, filters, and reference lines','Connecting to multiple data sources','Scheduling dashboard refreshes'], correct:1,
+    exp:'Parameters let users input values (via slider, dropdown, text input) that calculated fields can reference. Classic use: "Show Top N" where N is a slider from 1 to 20. Or a date range parameter that overrides fixed date filters.' },
+
+  // ─── Data Cleansing ───
+  { cat:'Cleansing', q:'Which type of missing data is most difficult to handle?',
+    opts:['MCAR — Missing Completely At Random','MAR — Missing At Random','MNAR — Missing Not At Random','All types are equally difficult'], correct:2,
+    exp:'MNAR means the missingness is related to the missing value itself (e.g., high earners don\'t report income). You can\'t assume randomness, can\'t impute safely without understanding the mechanism, and may need domain expertise or additional data.' },
+  { cat:'Cleansing', q:'When should you use median imputation over mean imputation?',
+    opts:['When data is normally distributed','When data is skewed or contains outliers','When you have more than 1,000 rows','Never — mean imputation is always preferred'], correct:1,
+    exp:'Mean is pulled by extreme values (outliers), making it a poor central estimate for skewed data. Median is the middle value and is robust to outliers. For revenue data — typically right-skewed — median imputation is almost always safer.' },
+  { cat:'Cleansing', q:'What is the "80/20 rule" commonly cited in data science?',
+    opts:['80% of insights come from 20% of the data','80% of time is spent on data preparation; 20% on analysis','Keep 80% of data for training, 20% for testing','80% of columns need cleansing'], correct:1,
+    exp:'Data practitioners consistently report that the vast majority of project time is consumed by data cleaning, transformation, and quality assurance rather than the modelling or visualisation that gets the attention.' },
+  { cat:'Cleansing', q:'What is fuzzy matching used for in data cleansing?',
+    opts:['Encrypting sensitive data fields','Finding records that are similar but not exactly identical (near-duplicate detection)','Detecting statistical outliers','Imputing missing values using ML'], correct:1,
+    exp:'Fuzzy matching finds strings that are "close" — "Apple Inc" vs "Apple Inc." vs "Apple Corporation". Tools like fuzzywuzzy use edit distance and token ratios to score similarity, enabling entity resolution across messy datasets.' },
+  { cat:'Cleansing', q:'What is Great Expectations used for in data pipelines?',
+    opts:['Running machine learning pipelines','Automated data validation — defining and testing data quality rules programmatically','Visualising data distributions in Jupyter notebooks','Connecting pandas to cloud data warehouses'], correct:1,
+    exp:'Great Expectations lets you define "expectations" (column not null, values between 0–100, emails matching a regex) and validate data against them. Failed expectations trigger alerts before bad data reaches dashboards or models.' },
+  { cat:'Cleansing', q:'What is the recommended approach to handling missing values in a key ID column?',
+    opts:['Impute with the most frequent value','Impute with -1 as a placeholder','Remove rows with missing key IDs or investigate the data source','Fill with the string "Unknown"'], correct:2,
+    exp:'Key identifiers (customer_id, order_id) should never be guessed or fabricated. Missing IDs typically indicate a data pipeline problem — an upstream join failure or ETL bug. Investigate the root cause rather than masking it with imputation.' },
+
+  // ─── Data Governance ───
+  { cat:'Governance', q:'What is a data catalog?',
+    opts:['A database of dictionaries for NLP models','A centralized inventory of data assets with metadata — definitions, owners, quality scores, lineage','A tool for encrypting sensitive data columns','A list of all data governance policies'], correct:1,
+    exp:'Data catalogs (Alation, Collibra, DataHub, Microsoft Purview) are searchable inventories where analysts discover what data exists, understand its meaning, see who owns it, and assess its quality before using it in reports or models.' },
+  { cat:'Governance', q:'Under GDPR, how long may personal data be retained?',
+    opts:['Maximum 5 years','Maximum 10 years','Only as long as necessary for the stated purpose','Indefinitely if encrypted at rest'], correct:2,
+    exp:'GDPR\'s storage limitation principle requires that personal data is kept "no longer than is necessary for the purposes for which the personal data are processed." There is no fixed time limit — it depends entirely on the stated purpose.' },
+  { cat:'Governance', q:'What is data lineage?',
+    opts:['The age and historical versions of a dataset','The trail showing where data originated, how it was transformed, and where it flows downstream','The ownership hierarchy of data assets in an organisation','The number of times a dataset was accessed in a period'], correct:1,
+    exp:'Data lineage tracks the full journey: raw source → ETL → warehouse table → dashboard → report. Critical for impact analysis ("what breaks if I change this table?"), debugging wrong numbers, and proving GDPR compliance.' },
+  { cat:'Governance', q:'What is the role of a Data Steward?',
+    opts:['The executive accountable for an entire data domain','The IT person responsible for physical storage and backup','The person responsible for day-to-day data quality management within a domain','The analyst who queries and reports on data'], correct:2,
+    exp:'Data Stewards own operational data quality: defining business rules, resolving quality issues, maintaining the data dictionary. They bridge business (Data Owners) and IT (Data Custodians). Analysts are Data Consumers.' },
+  { cat:'Governance', q:'What is Master Data Management (MDM)?',
+    opts:['Managing the master branch of a data repository','Creating a single authoritative "golden record" for key business entities across systems','A methodology for managing big data at petabyte scale','The process of archiving historical data to cold storage'], correct:1,
+    exp:'MDM de-duplicates and reconciles records for key entities like customers, products, and suppliers across CRM, ERP, and support systems. The result is one unified golden record per entity — eliminating the "same customer, three IDs" problem.' },
+];
+
+let mode = 'study';
+let selectedCat = 'All';
+let questions = [];
+let current = 0;
+let score = 0;
+let answered = false;
+let catScores = {};
+
+function selectMode(el) {
+  document.querySelectorAll('[data-mode]').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  mode = el.dataset.mode;
+}
+
+function selectCat(el) {
+  document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  selectedCat = el.dataset.cat;
+}
+
+function startQuiz() {
+  questions = selectedCat === 'All' ? [...ALL_QUESTIONS] : ALL_QUESTIONS.filter(q => q.cat === selectedCat);
+  // Shuffle
+  for (let i = questions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questions[i], questions[j]] = [questions[j], questions[i]];
+  }
+  current = 0; score = 0;
+  catScores = {};
+  questions.forEach(q => { if (!catScores[q.cat]) catScores[q.cat] = {c:0,t:0}; catScores[q.cat].t++; });
+
+  document.getElementById('setup').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  answered = false;
+  document.getElementById('q-counter').textContent = `Question ${current + 1} of ${questions.length}`;
+  document.getElementById('score-live').textContent = score;
+  const pct = (current / questions.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  const badge = document.getElementById('cat-badge');
+  badge.textContent = q.cat === 'Cleansing' ? 'Data Cleansing' : q.cat === 'Governance' ? 'Data Governance' : q.cat;
+  badge.className = 'category-badge cat-' + q.cat;
+
+  document.getElementById('q-text').textContent = q.q;
+
+  const letters = ['A', 'B', 'C', 'D'];
+  const optContainer = document.getElementById('options');
+  optContainer.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.dataset.idx = i;
+    div.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${opt}</span>`;
+    div.onclick = () => selectAnswer(i);
+    optContainer.appendChild(div);
+  });
+
+  const exp = document.getElementById('explanation');
+  exp.textContent = '';
+  exp.classList.remove('show');
+
+  const btn = document.getElementById('btn-next');
+  btn.disabled = true;
+  btn.textContent = current === questions.length - 1 ? 'See Results →' : 'Next →';
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('disabled'));
+
+  const selected = opts[idx];
+  const correct = opts[q.correct];
+
+  if (idx === q.correct) {
+    selected.classList.add('correct');
+    score++;
+    catScores[q.cat].c++;
+  } else {
+    selected.classList.add('wrong');
+    correct.classList.add('revealed');
+  }
+
+  document.getElementById('score-live').textContent = score;
+
+  if (mode === 'study') {
+    const exp = document.getElementById('explanation');
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.exp;
+    exp.classList.add('show');
+  }
+
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) { showResults(); return; }
+  renderQuestion();
+}
+
+function showResults() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+
+  const pct = Math.round((score / questions.length) * 100);
+  const pass = pct >= 70;
+
+  document.getElementById('result-icon').textContent = pct >= 90 ? '🏆' : pct >= 70 ? '✅' : pct >= 50 ? '📚' : '💪';
+  const pctEl = document.getElementById('result-pct');
+  pctEl.textContent = pct + '%';
+  pctEl.className = 'result-pct ' + (pass ? 'pass' : 'fail');
+  document.getElementById('result-label').textContent = pass ? (pct >= 90 ? 'Outstanding! Interview-ready.' : 'Pass — Strong performance.') : (pct >= 50 ? 'Keep practising — almost there.' : 'More study needed — you\'ve got this.');
+  document.getElementById('result-sub').textContent = `${score} correct out of ${questions.length} questions`;
+
+  const breakdown = document.getElementById('cat-breakdown');
+  breakdown.innerHTML = '';
+  Object.entries(catScores).forEach(([cat, s]) => {
+    const catPct = s.t > 0 ? Math.round((s.c / s.t) * 100) : 0;
+    const div = document.createElement('div');
+    div.className = 'cat-stat';
+    div.innerHTML = `<div class="cat-stat-name">${cat === 'Cleansing' ? 'Data Cleansing' : cat === 'Governance' ? 'Governance' : cat}</div><div class="cat-stat-score">${s.c}/${s.t} <span style="font-size:0.85rem;color:var(--gray);font-weight:500">(${catPct}%)</span></div>`;
+    breakdown.appendChild(div);
+  });
+
+  const finalPct = (current / questions.length) * 100;
+  document.getElementById('progress-bar').style.width = '100%';
+}
+
+function retakeQuiz() {
+  current = 0; score = 0;
+  questions.forEach(q => { catScores[q.cat] = {c:0,t:catScores[q.cat]?.t||0}; });
+  // re-shuffle
+  for (let i = questions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questions[i], questions[j]] = [questions[j], questions[i]];
+  }
+  questions.forEach(q => { if (!catScores[q.cat]) catScores[q.cat] = {c:0,t:0}; catScores[q.cat].t++; });
+  // reset counts
+  catScores = {};
+  questions.forEach(q => { if (!catScores[q.cat]) catScores[q.cat] = {c:0,t:0}; catScores[q.cat].t++; });
+
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  renderQuestion();
+}
+
+function backToSetup() {
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('setup').style.display = 'block';
+}
+</script>
+</body>
+</html>
