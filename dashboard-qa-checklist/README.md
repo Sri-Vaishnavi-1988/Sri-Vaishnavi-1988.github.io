@@ -67,7 +67,7 @@ The skill is intentionally calibrated to a generic L&D analytics context. To ada
 
 Version: 1.0.0
 Standard: [agentskills.io](https://agentskills.io)
-Maintainer: Sri Vaishnavi Devarashetty ([LinkedIn](https://linkedin.com/in/srivaishnavi))
+Maintainer: Sri Vaishnavi Devarashetty ([LinkedIn](https://www.linkedin.com/in/srivaishnavi-devarashetty/))
 
 Pull requests welcome. Open an issue first to discuss substantial changes.
 
